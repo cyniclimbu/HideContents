@@ -10,7 +10,7 @@ include HighLine::SystemExtensions
 MAIN_DIR = Dir.pwd                # REPLACE THIS WITH THE DIRECTORY YOU WANT TO HIDE CONTENTS OF
 SYS_DIR  = MAIN_DIR + '/login'    # UNFORTUNATELY YOU NEED A LOGIN DIRECTORY IN SYS_DIR, DIY THE WAY YOU WANT ;)
 FILE     = "password"
-# MASTER   = "71694c438ef89b5e15fa1fdb3b368439" # REMOVE #'s on line(s) 36-39/117/130 TO USE THIS FEATURE
+# MASTER   = "d41d8cd98f00b204e9800998ecf8427e" # REMOVE #'s on line(s) 36-39/117/130 TO USE THIS FEATURE
 
 system("cls")
 print "SeeWhyAnEyeSee".bold.green; puts " console\n"
