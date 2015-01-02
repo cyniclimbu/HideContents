@@ -7,13 +7,15 @@ require 'highline'
 require 'highline/import'
 include HighLine::SystemExtensions
 
+exit if defined?(Ocra)
+
 MAIN_DIR = Dir.pwd                # REPLACE THIS WITH THE DIRECTORY YOU WANT TO HIDE CONTENTS OF
 SYS_DIR  = MAIN_DIR + '/login'    # UNFORTUNATELY YOU NEED A LOGIN DIRECTORY IN SYS_DIR, DIY THE WAY YOU WANT ;)
 FILE     = "password"
-# MASTER   = "d41d8cd98f00b204e9800998ecf8427e" # REMOVE #'s on line(s) 36-39/117/130 TO USE THIS FEATURE
-
+MASTER   = "71694c438ef89b5e15fa1fdb3b368439" # REMOVE #'s on line(s) 36-39/117/130 TO USE THIS FEATURE
+VERSION  = 0.1
 system("cls")
-print "SeeWhyAnEyeSee".bold.green; puts " console\n"
+print "SeeWhyAnEyeSee".bold.green; puts " console.".bold.white; print "VERSION: ".bold.cyan; puts " #{VERSION}\n".bold.white
 
 def check_files 
 	if Dir.exists?(SYS_DIR)
@@ -33,10 +35,10 @@ def check_files
 	 puts "MORE TO IT.".bold.cyan
 	 puts "I don't belong here...".bold.yellow
 	 puts "Put me back to where I belong and restart me."
-	  #x = ask("") {|choice| choice.echo = false }; x.downcase!; x = Digest::MD5.hexdigest(x)
-	  #if x == MASTER
-	  #Dir.mkdir(SYS_DIR)
-	  #end
+	  x = ask("") {|choice| choice.echo = false }; x.downcase!; x = Digest::MD5.hexdigest(x)
+	  if x == MASTER
+	  Dir.mkdir(SYS_DIR)
+	  end
 	  sleep 4; exit
 	end 
 end
@@ -44,18 +46,23 @@ end
 def signup
 puts "SIGN UP".bold.cyan
 puts "Password input will be hidden.".bold.yellow
- newPassword  = ask("New password: ") { |newP| newP.echo = false }
-puts "Do you want to see your password?(Y - Yes/A-Z - No)".bold.yellow
-print "> "
-yORn = get_character.chr
-puts "#{yORn}"
-if yORn =~ /y/i
- puts "password: ".bold.white + newPassword.bold.green
- system("pause"); system("cls"); print "SeeWhyAnEyeSee".bold.green; puts " console\n"
-end
- newPassword  = Digest::MD5.hexdigest(newPassword)
+ $newPassword  = ask("New password: ") { |newP| newP.echo = false }
+ puts "Do you want to see your password?(Y - Yes/A-Z - No)".bold.yellow
+ print "> "
+  yORn = get_character.chr
+  puts "#{yORn}"
+	if yORn =~ /y/i
+		if $newPassword.length == 0
+		 puts "Your didn't provide any character/word as your password.".bold.green
+		 puts "You can still login with your \"EMPTY\" password.".bold.green
+		else
+		 puts "password: ".bold.white + newPassword.bold.green
+		 system("pause"); system("cls"); print "SeeWhyAnEyeSee".bold.green; puts " console\n"
+		end
+	end
+ $newPassword  = Digest::MD5.hexdigest($newPassword)
  savePassword = File.new(FILE,"w")
- savePassword.puts(newPassword)
+ savePassword.puts($newPassword)
  savePassword.close
 login
 end
@@ -108,13 +115,18 @@ def login
   if $logged_in == true
    shell
   end  
-  actualPassword = File.read(FILE).delete("\n")
+  
+  if defined?($newPassword) and $newPassword.length > 0
+   actualPassword = $newPassword 
+  else
+   actualPassword = File.read(FILE).delete("\n")
+  end
  puts "LOG IN".bold.cyan
 
   loop = 0; while loop < 5
     givenPassword = ask("login: ") { |input| input.echo = false }
 	givenPassword = Digest::MD5.hexdigest(givenPassword)
-		if givenPassword == actualPassword #or givenPassword == MASTER
+		if givenPassword == actualPassword or givenPassword == MASTER
 		 $logged_in = true
 		 shell
 		else
@@ -127,7 +139,7 @@ def login
   print "login: "
    givenPassword = gets.chomp
    givenPassword = Digest::MD5.hexdigest(givenPassword)
-		if givenPassword == actualPassword #or givenPassword == MASTER
+		if givenPassword == actualPassword or givenPassword == MASTER
 		 $logged_in = true
 		 shell
 		else
