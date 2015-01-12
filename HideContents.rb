@@ -23,7 +23,7 @@ print "Command: "; command = gets.chomp
 	system('cls')
 	
 	elsif command =~ /cd/i
-	 command.sub!("cd ","") # IF ANYONE HAS BETTER WAYS OF GETTING DIRECTORIES FROM INPUT...HELP ME OUT
+	 command.split(/\s+/, 2).last
 	 
 		if Dir.exists?(command)
 			Dir.chdir(command)
