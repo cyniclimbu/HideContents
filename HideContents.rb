@@ -33,14 +33,14 @@ print "Command: "; command = gets.chomp
 		end
 		
 	elsif command =~ /hide all/i
-	  puts "Hiding."
+	  puts "Hiding all."
  	  all = Dir.glob'*'
 	  all.each do |hide|
 	  system("attrib +s +h \"#{hide}\"")
 	  end 
 	  
 	elsif command =~ /show all/i 
-	  puts "Showing."
+	  puts "Showing all."
 	  all = Dir.glob'*'
  	  all.each do |show|
 	  system("attrib -s -h \"#{show}\"")
