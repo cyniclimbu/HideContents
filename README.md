@@ -9,8 +9,12 @@ Jk. This will hide contents of a directory.
 
 Commands
 ============
-help\n 
-hide all/hide specific file\n
-show all/show specific file\n
-cls\n
-cd\n
+help
+
+hide all/hide specific file
+
+show all/show specific file
+
+cls
+
+cd
