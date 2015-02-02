@@ -4,7 +4,7 @@ HideContents
 This is a work of an amatuer self-made programmer who has worked very hard to get here. :neckbeard:
 Gib moni pls!
 
-Jk. This will hide contents of a directory.
+Jk. This will hide contents of a directory also this is a part of rootShell.
 
 
 Commands
